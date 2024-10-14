@@ -31,7 +31,9 @@ nodes = {
 
 # Set hardware types and disk images
 nodes["5g"].hardware_type = "d430"
-nodes["5g"].disk_image = "urn:publicid:IDN+emulab.net+image+mww2023:oai-cn5g-rfsim"
+# nodes["5g"].disk_image = "urn:publicid:IDN+emulab.net+image+mww2023:oai-cn5g-rfsim"
+nodes["5g"].disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD'
+
 add_install_services_5g(nodes["5g"])
 
 for node_name in ["fifo_deep", "dualq", "classic_sender", "prague_sender"]:
