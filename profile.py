@@ -37,21 +37,25 @@ nodes = {
     "dualq": request.RawPC("dualq"),
     "classic_sender": request.RawPC("classic_sender"),
     "prague_sender": request.RawPC("prague_sender"),
-    "classic_receiver": request.RawPC("classic_receiver"),
-    "prague_receiver": request.RawPC("prague_receiver")
+    "classic_receiver": request.XenVM("classic_receiver"),  # Changed to VM
+    "prague_receiver": request.XenVM("prague_receiver")    # Changed to VM
 }
 
 # Set hardware types and disk images
 nodes["5g"].hardware_type = "d430"
-# nodes["5g"].disk_image = "urn:publicid:IDN+emulab.net+image+mww2023:oai-cn5g-rfsim"
 nodes["5g"].disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD'
 
 add_install_services_5g(nodes["5g"])
 
-for node_name in ["fifo_deep", "dualq", "classic_sender", "prague_sender", "classic_receiver", "prague_receiver"]:
+for node_name in ["fifo_deep", "dualq", "classic_sender", "prague_sender"]:
     nodes[node_name].hardware_type = "d710"
     nodes[node_name].disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD'
     add_install_services(nodes[node_name])
+
+# Configure VMs (classic_receiver and prague_receiver)
+for vm_name in ["classic_receiver", "prague_receiver"]:
+    nodes[vm_name].disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD'
+    add_install_services(nodes[vm_name])
 
 # Enable IP forwarding on fifo_deep and dualq nodes
 enable_ip_forwarding(nodes["fifo_deep"])
